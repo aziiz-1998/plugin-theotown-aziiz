@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plugin Theotown - Aziiz1998</title>
+    <!-- Mengambil Font Modern 'Poppins' -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS VARIABLES - Tema Warna TheoTown */
+        :root {
+            --bg-color: #0f111a; 
+            --card-bg: #1e2230;
+            --text-color: #e0e6ed;
+            --grid-line: rgba(255, 255, 255, 0.05);
+            --accent-green: #22b14c;
+            --accent-blue: #00a2e8;
+            --accent-red: #ed1c24;
+            --accent-gold: #ffc90e;
+            --accent-purple: #a349a4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* Mencegah teks terpotong secara horizontal */
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            
+            /* Efek Grid Peta */
+            background-image: 
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 30px 30px;
+            
+            /* Mencegah scroll horizontal pada body */
+            overflow-x: hidden;
+        }
+
+        /* HEADER DESIGN */
+        header {
+            text-align: center;
+            padding: 40px 20px 30px;
+            background: linear-gradient(180deg, #162032 0%, var(--bg-color) 100%);
+            border-bottom: 4px solid var(--accent-blue);
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .subtitle {
+            font-size: 0.8rem;
+            color: var(--accent-blue);
+            font-weight: 600;
+            background: rgba(0, 162, 232, 0.1);
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 162, 232, 0.3);
+        }
+
+        .yt-btn {
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+            background-color: #FF0000;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 0 #cc0000;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        .yt-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #cc0000;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 15px 60px; /* Padding bawah diperbesar */
+        }
+
+        .plugin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* CARD DESIGN */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 160px; /* Tinggi gambar disesuaikan agar tidak makan tempat */
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background-color: #000;
+            /* Mencegah gambar terpotong saat dimuat */
+            min-height: 160px; 
+        }
+
+        .card-content {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Badges Kategori */
+        .category {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 8px;
+            width: fit-content;
+            letter-spacing: 0.5px;
+        }
+
+        .cat-kuburan { background: rgba(128,128,128,0.2); color: #ccc; }
+        .cat-pemadam { background: rgba(237,28,36,0.2); color: var(--accent-red); }
+        .cat-landmark { background: rgba(255,201,14,0.2); color: var(--accent-gold); }
+        .cat-pendidikan { background: rgba(0,162,232,0.2); color: var(--accent-blue); }
+        .cat-rumah { background: rgba(255,255,255,0.1); color: #fff; }
+        .cat-air { background: rgba(0,162,232,0.2); color: var(--accent-blue); }
+        .cat-rs { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+        .cat-taman { background: rgba(34,177,76,0.2); color: var(--accent-green); }
+        .cat-sampah { background: rgba(100,100,100,0.2); color: #999; }
+        .cat-komersial { background: rgba(0,162,232,0.2); color: var(--accent-blue); }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        /* Perbaikan Deskripsi Tidak Terpotong */
+        .description {
+            font-size: 0.8rem;
+            color: #a0aab5;
+            margin-bottom: 15px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 4px solid var(--accent-green);
+            
+            /* Scroll Fix */
+            max-height: 130px; /* Tinggi kotak dibatasi */
+            overflow-y: scroll; /* Menggunakan 'scroll' (bukan auto) agar scrollbar selalu muncul jika konten panjang */
+            
+            /* Style Scrollbar agar Terlihat Jelas */
+            scrollbar-width: auto;
+            scrollbar-color: var(--accent-green) #1e2230;
+        }
+
+        /* Custom Scrollbar yang Tebal (Android/Chrome) */
+        .description::-webkit-scrollbar {
+            width: 8px; /* Lebar scrollbar diperbesar */
+        }
+        .description::-webkit-scrollbar-track {
+            background: #1e2230; 
+        }
+        .description::-webkit-scrollbar-thumb {
+            background-color: var(--accent-green); /* Warna Hijau Cerah */
+            border-radius: 10px;
+            border: 2px solid #1e2230; /* Efek gap */
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            text-align: center;
+            background-color: var(--accent-green);
+            color: #000;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background 0.2s;
+            margin-top: auto;
+            box-shadow: 0 4px 0 #146629;
+        }
+
+        .download-btn:hover {
+            background-color: #29d45d;
+        }
+
+        .download-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 #146629;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #555d6a;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Responsive Khusus Layar Kecil (< 360px) */
+        @media (max-width: 360px) {
+            .plugin-grid {
+                grid-template-columns: 1fr; /* Paksa 1 kolom agar tidak terpotong */
+            }
+            h1 { font-size: 1.5rem; }
+            .card-image { height: 140px; }
+            .description { max-height: 120px; }
+            .card-title { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>PLUGIN THEOTOWN</h1>
+        <p class="subtitle">CREATE BY AZIIZ1998 DILARANG RE-UPLOAD</p>
+        <br>
+        <a href="https://youtube.com/@aziiz1998?si=7levvkHdt68CPT2f" target="_blank" class="yt-btn">
+            ▶ YouTube Channel
+        </a>
+    </header>
+
+    <main class="container">
+        <div class="plugin-grid">
+
+            <!-- Plugin 1: God of War Kratos -->
+            <div class="card">
+                <img src="https://i.ibb.co/gFHBNV50/IMG-20260120-200041.jpg" alt="God of War Kratos" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-kuburan">KUBURAN</span>
+                    <h2 class="card-title">PLUGIN GOD OF WAR KRATOS</h2>
+                    <div class="description">
+                        DES: Polusi, Suara, Kesehatan, Polisi, Kebakaran, Taman, Olahraga, Pendidikan Rendah & Tinggi, Budaya, Keagamaan, Transpostasi Bus, Radioaktif, Alam, Pemakaman, Air dan Listrik 23.000
+                    </div>
+                    <a href="https://sfl.gl/IEQ019E" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 2: Polisi X Pemadam -->
+            <div class="card">
+                <img src="https://i.ibb.co/0pbqPFfF/IMG-20260120-200303.jpg" alt="Polisi X Pemadam" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-pemadam">PEMADAM</span>
+                    <h2 class="card-title">PLUGIN POLISI X PEMADAM</h2>
+                    <div class="description">
+                        DES: Polisi, Pemadam
+                    </div>
+                    <a href="https://sfl.gl/7M0JQ7N" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 3: Presiden Bu Mega V1 -->
+            <div class="card">
+                <img src="https://i.ibb.co/23VQ99Xb/IMG-20260120-200411.jpg" alt="Presiden Bu Mega V1" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-landmark">LANDMARK</span>
+                    <h2 class="card-title">PLUGIN PRESIDEN BU MEGA V1</h2>
+                    <div class="description">
+                        DES: Taman, Budaya
+                    </div>
+                    <a href="https://sfl.gl/3u2vV" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 4: Goblin -->
+            <div class="card">
+                <img src="https://i.ibb.co/84KWcGTx/IMG-20260120-210506.jpg" alt="Goblin" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-pendidikan">PENDIDIKAN</span>
+                    <h2 class="card-title">PLUGIN GOBLIN</h2>
+                    <div class="description">
+                        DES: Pendidikan Tinggi dan Rendah, Taman, Income
+                    </div>
+                    <a href="https://sfl.gl/0SoBwk0C" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 5: Penduduk TTT Remake -->
+            <div class="card">
+                <img src="https://i.ibb.co/Z6KtMDTH/IMG-20260120-210729.jpg" alt="Penduduk TTT Remake" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-rumah">PERUMAHAN TTT</span>
+                    <h2 class="card-title">PLUGIN PENDUDUK TTT REMAKE</h2>
+                    <div class="description">
+                        DES: Penduduk TTT (Kapasitas sesuai versi)
+                    </div>
+                    <a href="https://sfl.gl/xrZlpNf" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 6: Listrik Dan Air -->
+            <div class="card">
+                <img src="https://i.ibb.co/1JbGgC4T/IMG-20260120-WA0013.jpg" alt="Listrik Dan Air" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-air">AIR & LISTRIK</span>
+                    <h2 class="card-title">PLUGIN LISTRIK DAN AIR</h2>
+                    <div class="description">
+                        DES: Air dan Listrik Upgrade Max 20.000, Taman
+                    </div>
+                    <a href="https://sfl.gl/VTNs" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 7: Presiden Mega V2 -->
+            <div class="card">
+                <img src="https://i.ibb.co/844YMBMY/IMG-20260120-WA0024.jpg" alt="Presiden Mega V2" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-air">AIR</span>
+                    <h2 class="card-title">PLUGIN PRESIDEN MEGA V2</h2>
+                    <div class="description">
+                        DES: Taman, Budaya, Air dan Listrik 65.2000 Max Update
+                    </div>
+                    <a href="https://sfl.gl/B5RFOvT" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 8: Rumah Sakit -->
+            <div class="card">
+                <img src="https://i.ibb.co/SwZrD4yV/IMG-20260120-WA0025.jpg" alt="Rumah Sakit" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-rs">RUMAH SAKIT</span>
+                    <h2 class="card-title">PLUGIN RUMAH SAKIT</h2>
+                    <div class="description">
+                        DES: Rumah Sakit Kapasitas sesuai Ver / Ver Lama (800.000) Penduduk
+                    </div>
+                    <a href="https://sfl.gl/RVISuM9" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 9: Penduduk T -->
+            <div class="card">
+                <img src="https://i.ibb.co/nMtk7DYj/IMG-20260120-WA0026-1.jpg" alt="Penduduk T" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-rumah">PENDUDUK T</span>
+                    <h2 class="card-title">PLUGIN PENDUDUK T</h2>
+                    <div class="description">
+                        DES: Taman, Olahraga, Air dan Listrik, Penduduk sesuai ver 20.000 penduduk maks
+                    </div>
+                    <a href="https://sfl.gl/QOATYRCP" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 10: Tuan Crab -->
+            <div class="card">
+                <img src="https://i.ibb.co/5gvwBjmb/IMG-20260122-073837.jpg" alt="Tuan Crab" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-taman">TAMAN</span>
+                    <h2 class="card-title">PLUGIN TUAN CRAB</h2>
+                    <div class="description">
+                        DES: Taman, Budaya
+                    </div>
+                    <a href="https://sfl.gl/4Ml8AZ" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 11: Maoi -->
+            <div class="card">
+                <img src="https://i.ibb.co/FLQGG0hF/IMG-20260123-WA0027.jpg" alt="Maoi" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-sampah">TEMPAT SAMPAH</span>
+                    <h2 class="card-title">PLUGIN MAOI</h2>
+                    <div class="description">
+                        DES: Pendidikan Rendah & Tinggi, Polisi, Olahraga, Agama, Budaya, Suara, Polusi, Radioactive, Air dan Listrik, Pemadam, Taman, Transpostasi, Olahraga, Alam, Tempat Sampah, Kuburan
+                    </div>
+                    <a href="https://sfl.gl/FWwtcug" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 12: Komersial 3 Ramen -->
+            <div class="card">
+                <img src="https://i.ibb.co/FLsKNh3k/20260128-123106.jpg" alt="Komersial 3 Ramen" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-komersial">KOMERSIAL TTT</span>
+                    <h2 class="card-title">PLUGIN KOMERSIAL 3 RAMEN</h2>
+                    <div class="description">
+                        DES: Taman, Olahraga, Budaya, Air dan Listrik
+                    </div>
+                    <a href="https://sfl.gl/RH9h" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+            <!-- Plugin 13: Penduduk TT Rumah Naruto -->
+            <div class="card">
+                <img src="https://i.ibb.co/vCQ9ts68/IMG-20260130-WA0000.jpg" alt="Penduduk TT Rumah Naruto" class="card-image">
+                <div class="card-content">
+                    <span class="category cat-rumah">PENDUDUK TT</span>
+                    <h2 class="card-title">PLUGIN PENDUDUK TT RUMAH NARUTO</h2>
+                    <div class="description">
+                        DES: Penduduk TT 16.000, Taman, Olahraga, Air dan Listrik (159.000), Budaya, Agama, Transpostasi
+                    </div>
+                    <a href="https://sfl.gl/0zEkF6" target="_blank" class="download-btn">Download</a>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; copyright Aziiz1998 2026</p>
+        <p style="font-size: 0.7rem; margin-top: 5px; opacity: 0.6;">TheoTown Plugin Collection</p>
+    </footer>
+
+</body>
+</html>
